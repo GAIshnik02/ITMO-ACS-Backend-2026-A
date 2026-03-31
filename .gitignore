@@ -37,3 +37,7 @@ out/
 .vscode/
 .gitattributes
 /src/main/resources/application.yml
+build.gradle
+gradlew.bat
+gradlew
+settings.gradle
