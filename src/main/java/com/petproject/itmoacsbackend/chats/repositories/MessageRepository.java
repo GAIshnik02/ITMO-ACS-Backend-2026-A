@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
 
-    Page<MessageEntity> findByChatIdOrderByCreatedAtDesc(Long chatId, Pageable pageable);
+    Page<MessageEntity> findByChatIdOrderByTimestampDesc(Long chatId, Pageable pageable);
 
     Optional<MessageEntity> findFirstByChatIdOrderByCreatedAtDesc(Long id);
 }

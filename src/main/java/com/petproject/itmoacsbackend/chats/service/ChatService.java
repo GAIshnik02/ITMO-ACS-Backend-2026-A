@@ -4,7 +4,6 @@ import com.petproject.itmoacsbackend.chats.dto.ChatCreateRequest;
 import com.petproject.itmoacsbackend.chats.dto.ChatResponse;
 import com.petproject.itmoacsbackend.chats.entities.ChatEntity;
 import com.petproject.itmoacsbackend.chats.repositories.ChatRepository;
-import com.petproject.itmoacsbackend.chats.dto.MessageResponse;
 import com.petproject.itmoacsbackend.chats.entities.MessageEntity;
 import com.petproject.itmoacsbackend.chats.repositories.MessageRepository;
 import com.petproject.itmoacsbackend.users.entities.UserEntity;
@@ -28,9 +27,6 @@ public class ChatService {
 
     @Transactional
     public ChatResponse createChat(ChatCreateRequest request, UserEntity user) {
-        // TODO: Посмотреть нужна ли эта проверка или и так норм (по идее юзер уже есть в секьюрити контексте)
-        UserEntity user1 = userRepository.findById(user.getId()).
-                orElseThrow(() -> new EntityNotFoundException("User not found"));
         UserEntity user2 =  userRepository.findById(request.user_toChat())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
@@ -39,14 +35,14 @@ public class ChatService {
             throw new IllegalArgumentException("Cannot create chat with yourself");
         }
 
-        ChatEntity existingChat = chatRepository.findByUsers(user1.getId(), user2.getId()).orElse(null);
+        ChatEntity existingChat = chatRepository.findByUsers(user.getId(), user2.getId()).orElse(null);
 
         if (existingChat != null) {
             return mapToResponse(existingChat);
         }
 
         ChatEntity newChat = ChatEntity.builder()
-                .user1Id(user1)
+                .user1Id(user)
                 .user2Id(user2)
                 .build();
 
@@ -83,19 +79,12 @@ public class ChatService {
 
     private ChatResponse mapToResponse(ChatEntity chat) {
         return ChatResponse.builder()
-                .chatId(chat.getUser1Id().getId())
+                .chatId(chat.getId())
                 .otherUserId(chat.getUser2Id().getId())
                 .otherUserName(chat.getUser2Id().getUsername())
                 .build();
     }
 
-    private MessageResponse mapToResponse(MessageEntity message) {
-        return new MessageResponse(
-                message.getId(),
-                message.getSenderId().getId(),
-                message.getMessage(),
-                message.getTimestamp()
-        );
-    }
+
 
 }

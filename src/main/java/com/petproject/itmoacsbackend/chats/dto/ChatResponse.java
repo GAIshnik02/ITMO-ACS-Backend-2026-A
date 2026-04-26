@@ -9,7 +9,9 @@ public record ChatResponse(
         Long chatId,
         Long otherUserId,
         String otherUserName,
+
         String lastMessage,
+
         LocalDateTime lastMessageTime
 ) {
 }
