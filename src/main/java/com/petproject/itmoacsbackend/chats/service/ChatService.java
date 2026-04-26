@@ -65,7 +65,7 @@ public class ChatService {
                     ? chat.getUser2Id().getUsername()
                     : chat.getUser1Id().getUsername();
 
-            MessageEntity lastMessage = messageRepository.findFirstByChatIdOrderByCreatedAtDesc(chat.getId()).orElse(null);
+            MessageEntity lastMessage = messageRepository.findFirstByChatIdOrderByTimestampDesc(chat.getId()).orElse(null);
 
             return new ChatResponse(
                     chat.getId(),

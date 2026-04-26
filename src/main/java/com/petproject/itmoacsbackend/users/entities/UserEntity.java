@@ -1,7 +1,6 @@
 package com.petproject.itmoacsbackend.users.entities;
 
 import com.petproject.itmoacsbackend.auth.enums.GlobalRole;
-import com.petproject.itmoacsbackend.entities.ContactEntity;
 import com.petproject.itmoacsbackend.chats.entities.MessageEntity;
 import com.petproject.itmoacsbackend.entities.PropertyEntity;
 import com.petproject.itmoacsbackend.entities.ReviewEntity;
@@ -59,9 +58,6 @@ public class UserEntity implements UserDetails {
 
     private String patronymic;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "userId",  cascade = CascadeType.ALL,  orphanRemoval = true)
-    private List<ContactEntity> contacts = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL,  orphanRemoval = true)

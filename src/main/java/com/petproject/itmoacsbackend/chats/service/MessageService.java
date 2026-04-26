@@ -40,7 +40,7 @@ public class MessageService {
             throw new SecurityException("You don't have permission to access this resource");
         }
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "timestamp"));
 
         return messageRepository.findByChatIdOrderByTimestampDesc(chatId, pageable).map(
                 this::mapToResponse

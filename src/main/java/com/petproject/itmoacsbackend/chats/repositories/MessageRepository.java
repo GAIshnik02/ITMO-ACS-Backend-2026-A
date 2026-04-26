@@ -11,5 +11,5 @@ public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
 
     Page<MessageEntity> findByChatIdOrderByTimestampDesc(Long chatId, Pageable pageable);
 
-    Optional<MessageEntity> findFirstByChatIdOrderByCreatedAtDesc(Long id);
+    Optional<MessageEntity> findFirstByChatIdOrderByTimestampDesc(Long id);
 }

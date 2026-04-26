@@ -1,0 +1,29 @@
+ALTER TABLE chat
+    DROP CONSTRAINT fk3lc65cxbwgsjiv5nm283rikoo;
+
+ALTER TABLE chat
+    DROP CONSTRAINT fktgobnk4vrlcnm98lhw5dg8o5s;
+
+ALTER TABLE chat
+    ADD user1id_id BIGINT;
+
+ALTER TABLE chat
+    ADD user2id_id BIGINT;
+
+ALTER TABLE chat
+    ALTER COLUMN user1id_id SET NOT NULL;
+
+ALTER TABLE chat
+    ALTER COLUMN user2id_id SET NOT NULL;
+
+ALTER TABLE chat
+    ADD CONSTRAINT FK_CHAT_ON_USER1ID FOREIGN KEY (user1id_id) REFERENCES _user_ (id);
+
+ALTER TABLE chat
+    ADD CONSTRAINT FK_CHAT_ON_USER2ID FOREIGN KEY (user2id_id) REFERENCES _user_ (id);
+
+ALTER TABLE chat
+    DROP COLUMN user1_id_id;
+
+ALTER TABLE chat
+    DROP COLUMN user2_id_id;
