@@ -1,9 +1,8 @@
-package com.petproject.itmoacsbackend.entities;
+package com.petproject.itmoacsbackend.chats.entities;
 
+import com.petproject.itmoacsbackend.users.entities.UserEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +11,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 public class MessageEntity {
 
     @Id

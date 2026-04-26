@@ -111,6 +111,50 @@ paths:
                 - username
                 - email
                 - password
+
+  /auth/refresh:
+    post:
+      operationId: AuthApi_refresh
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  refreshToken:
+                    type: string
+                  expiresIn:
+                    type: integer
+                    format: int32
+                required:
+                  - token
+                  - refreshToken
+                  - expiresIn
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+              required:
+                - refreshToken
+
   /bookings:
     post:
       operationId: BookingsApi_create

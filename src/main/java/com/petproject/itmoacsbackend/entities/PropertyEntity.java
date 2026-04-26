@@ -1,20 +1,23 @@
 package com.petproject.itmoacsbackend.entities;
 
 
+import com.petproject.itmoacsbackend.users.entities.UserEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Table(name = "property")
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 public class PropertyEntity {
 
     @Id
@@ -25,16 +28,36 @@ public class PropertyEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity userId;
 
+    @Builder.Default
     @OneToMany(mappedBy = "propertyId",  cascade = CascadeType.ALL,  orphanRemoval = true)
-    private List<PropertyImageEntity> propertyImages;
+    private List<PropertyImageEntity> propertyImages =  new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "propertyId",  cascade = CascadeType.ALL,  orphanRemoval = true)
     private List<ReviewEntity> reviews = new ArrayList<>();
+
+    @ManyToMany
+    @Builder.Default
+    @JoinTable(
+            name = "property_amenity_link",
+            joinColumns = @JoinColumn(name = "property_id"),
+            inverseJoinColumns = @JoinColumn(name = "amenity_id")
+    )
+    private Set<AmenityEntity> amenities = new HashSet<>();
 
     @Column(nullable = false)
     private String title;
 
     private String description;
+
+    @Builder.Default
+    private Integer totalReviews = 0;
+
+    @Builder.Default
+    private Integer ratingSum = 0;
+
+    @Builder.Default
+    private Double avgRating = 0.0;
 
     @Column(nullable = false)
     private Float price;
@@ -66,6 +89,7 @@ public class PropertyEntity {
 
     private Double longitude;
 
+    @Builder.Default
     private Boolean available = false;
 
     @Column(nullable = false)

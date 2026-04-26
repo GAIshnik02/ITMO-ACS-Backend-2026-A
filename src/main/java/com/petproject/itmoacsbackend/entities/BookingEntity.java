@@ -1,12 +1,9 @@
 package com.petproject.itmoacsbackend.entities;
 
-
-import aQute.bnd.annotation.licenses.CPL_1_0;
 import com.petproject.itmoacsbackend.enums.BookingStatus;
+import com.petproject.itmoacsbackend.users.entities.UserEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,6 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 public class BookingEntity {
 
     @Id
@@ -40,6 +39,7 @@ public class BookingEntity {
     @Column(nullable = false)
     private LocalDate endDate;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BookingStatus bookingStatus =  BookingStatus.PENDING;

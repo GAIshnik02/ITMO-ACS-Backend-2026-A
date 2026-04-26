@@ -3,9 +3,7 @@ package com.petproject.itmoacsbackend.entities;
 
 import com.petproject.itmoacsbackend.enums.PaymentStatus;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@Builder
 public class PaymentEntity {
 
     @Id
@@ -28,6 +28,7 @@ public class PaymentEntity {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaymentStatus paymentStatus = PaymentStatus.PENDING;
