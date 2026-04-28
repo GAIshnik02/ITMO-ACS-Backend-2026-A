@@ -1,4 +1,4 @@
-package com.petproject.itmoacsbackend.entities;
+package com.petproject.itmoacsbackend.property.entities;
 
 
 import jakarta.persistence.*;
@@ -42,6 +42,4 @@ public class PropertyImageEntity {
     public void preUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-
-
 }

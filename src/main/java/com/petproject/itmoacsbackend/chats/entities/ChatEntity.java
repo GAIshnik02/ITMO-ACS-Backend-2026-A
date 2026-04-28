@@ -22,11 +22,11 @@ public class ChatEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "user1_id", nullable = false)
     private UserEntity user1Id;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "user2_id", nullable = false)
     private UserEntity user2Id;
 
     @Builder.Default

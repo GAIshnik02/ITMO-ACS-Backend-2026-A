@@ -1,7 +1,7 @@
-package com.petproject.itmoacsbackend.entities;
+package com.petproject.itmoacsbackend.payments.entities;
 
 
-import com.petproject.itmoacsbackend.enums.PaymentStatus;
+import com.petproject.itmoacsbackend.payments.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 

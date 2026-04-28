@@ -4,15 +4,8 @@ import com.petproject.itmoacsbackend.auth.enums.GlobalRole;
 import lombok.Builder;
 
 @Builder
-public record UserResponse (
-
+public record UserShortResponse(
         Long id,
-        GlobalRole role,
-
-        Boolean isRenter,
-
-        Boolean isLandlord,
-
         String username,
 
         String email,
@@ -24,7 +17,5 @@ public record UserResponse (
         String lastName,
 
         String patronymic
-
 ) {
-
 }

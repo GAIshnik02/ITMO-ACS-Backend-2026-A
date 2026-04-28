@@ -1,6 +1,8 @@
-package com.petproject.itmoacsbackend.entities;
+package com.petproject.itmoacsbackend.booking.entities;
 
-import com.petproject.itmoacsbackend.enums.BookingStatus;
+import com.petproject.itmoacsbackend.payments.entities.PaymentEntity;
+import com.petproject.itmoacsbackend.property.entities.PropertyEntity;
+import com.petproject.itmoacsbackend.booking.enums.BookingStatus;
 import com.petproject.itmoacsbackend.users.entities.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,6 +1,7 @@
-package com.petproject.itmoacsbackend.entities;
+package com.petproject.itmoacsbackend.property.entities;
 
 
+import com.petproject.itmoacsbackend.reviews.entities.ReviewEntity;
 import com.petproject.itmoacsbackend.users.entities.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -82,6 +83,9 @@ public class PropertyEntity {
 
     @Column(nullable = false)
     private String postalCode;
+
+    @Column(nullable = false)
+    private String mainImage;
 
     private String nearestSubway;
 

@@ -1,5 +1,6 @@
-package com.petproject.itmoacsbackend.entities;
+package com.petproject.itmoacsbackend.reviews.entities;
 
+import com.petproject.itmoacsbackend.property.entities.PropertyEntity;
 import com.petproject.itmoacsbackend.users.entities.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;

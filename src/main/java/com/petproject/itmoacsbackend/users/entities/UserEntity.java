@@ -2,8 +2,8 @@ package com.petproject.itmoacsbackend.users.entities;
 
 import com.petproject.itmoacsbackend.auth.enums.GlobalRole;
 import com.petproject.itmoacsbackend.chats.entities.MessageEntity;
-import com.petproject.itmoacsbackend.entities.PropertyEntity;
-import com.petproject.itmoacsbackend.entities.ReviewEntity;
+import com.petproject.itmoacsbackend.property.entities.PropertyEntity;
+import com.petproject.itmoacsbackend.reviews.entities.ReviewEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

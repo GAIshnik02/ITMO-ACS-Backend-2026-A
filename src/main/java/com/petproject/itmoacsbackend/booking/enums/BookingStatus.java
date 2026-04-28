@@ -1,4 +1,4 @@
-package com.petproject.itmoacsbackend.enums;
+package com.petproject.itmoacsbackend.booking.enums;
 
 public enum BookingStatus {
     PENDING,

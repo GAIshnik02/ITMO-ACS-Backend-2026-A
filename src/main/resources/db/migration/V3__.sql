@@ -1,29 +1,15 @@
-ALTER TABLE chat
-    DROP CONSTRAINT fk3lc65cxbwgsjiv5nm283rikoo;
+-- Удаляем старые колонки из V2 (которые были неправильными)
+ALTER TABLE chat DROP COLUMN IF EXISTS user1id_id;
+ALTER TABLE chat DROP COLUMN IF EXISTS user2id_id;
 
-ALTER TABLE chat
-    DROP CONSTRAINT fktgobnk4vrlcnm98lhw5dg8o5s;
+-- Добавляем правильные колонки
+ALTER TABLE chat ADD COLUMN user1_id BIGINT NOT NULL;
+ALTER TABLE chat ADD COLUMN user2_id BIGINT NOT NULL;
 
-ALTER TABLE chat
-    ADD user1id_id BIGINT;
+-- Добавляем внешние ключи
+ALTER TABLE chat ADD CONSTRAINT FK_CHAT_ON_USER1 FOREIGN KEY (user1_id) REFERENCES _user_ (id);
+ALTER TABLE chat ADD CONSTRAINT FK_CHAT_ON_USER2 FOREIGN KEY (user2_id) REFERENCES _user_ (id);
 
-ALTER TABLE chat
-    ADD user2id_id BIGINT;
-
-ALTER TABLE chat
-    ALTER COLUMN user1id_id SET NOT NULL;
-
-ALTER TABLE chat
-    ALTER COLUMN user2id_id SET NOT NULL;
-
-ALTER TABLE chat
-    ADD CONSTRAINT FK_CHAT_ON_USER1ID FOREIGN KEY (user1id_id) REFERENCES _user_ (id);
-
-ALTER TABLE chat
-    ADD CONSTRAINT FK_CHAT_ON_USER2ID FOREIGN KEY (user2id_id) REFERENCES _user_ (id);
-
-ALTER TABLE chat
-    DROP COLUMN user1_id_id;
-
-ALTER TABLE chat
-    DROP COLUMN user2_id_id;
+-- Удаляем старые foreign keys если были
+ALTER TABLE chat DROP CONSTRAINT IF EXISTS FK_CHAT_ON_USER1ID;
+ALTER TABLE chat DROP CONSTRAINT IF EXISTS FK_CHAT_ON_USER2ID;

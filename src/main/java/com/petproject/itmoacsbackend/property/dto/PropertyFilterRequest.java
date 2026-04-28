@@ -10,6 +10,4 @@ public class PropertyFilterRequest {
     private String city;
     private String region;
     private String nearestSubway;
-
-
 }

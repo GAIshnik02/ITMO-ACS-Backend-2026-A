@@ -1,6 +1,6 @@
 package com.petproject.itmoacsbackend.property.repositories;
 
-import com.petproject.itmoacsbackend.entities.PropertyEntity;
+import com.petproject.itmoacsbackend.property.entities.PropertyEntity;
 import com.petproject.itmoacsbackend.users.entities.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
