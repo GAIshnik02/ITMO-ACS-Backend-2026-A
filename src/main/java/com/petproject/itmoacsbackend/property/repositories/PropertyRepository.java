@@ -19,7 +19,9 @@ public interface PropertyRepository extends JpaRepository<PropertyEntity, Long> 
             "(:available IS NULL OR p.available = :available) AND " +
             "(:type IS NULL OR p.type = :type) AND " +
             "(:country IS NULL OR LOWER(p.country) LIKE LOWER(CONCAT('%', :country, '%'))) AND " +
+            "(:region IS NULL OR LOWER(p.region) LIKE LOWER(CONCAT('%', :region, '%'))) AND " +
             "(:city IS NULL OR LOWER(p.city) LIKE LOWER(CONCAT('%', :city, '%'))) AND " +
+            "(:nearestSubway IS NULL OR LOWER(p.nearestSubway) LIKE LOWER(CONCAT('%', :nearestSubway, '%'))) AND " +
             "(:minPrice IS NULL OR p.price >= :minPrice) AND " +
             "(:maxPrice IS NULL OR p.price <= :maxPrice) AND " +
             "(:minSquare IS NULL OR p.square >= :minSquare) AND " +
@@ -28,7 +30,9 @@ public interface PropertyRepository extends JpaRepository<PropertyEntity, Long> 
             @Param("available") Boolean available,
             @Param("type") String type,
             @Param("country") String country,
+            @Param("region") String region,
             @Param("city") String city,
+            @Param("nearestSubway") String nearestSubway,
             @Param("minPrice") Float minPrice,
             @Param("maxPrice") Float maxPrice,
             @Param("minSquare") Float minSquare,

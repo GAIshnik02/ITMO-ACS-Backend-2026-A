@@ -1,22 +1,15 @@
 package com.petproject.itmoacsbackend.reviews.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/reviews")
+@RequestMapping("/api/v1/properties/{propertyId}/reviews")
 public class ReviewsController {
 
-    @PostMapping
-    public ResponseEntity<?> createReview() {
-        return null;
-    }
 
-    @GetMapping("/my")
-    public ResponseEntity<?> getMyReviews() {
-        return null;
-    }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getReview(@PathVariable Long id) {
         return null;
@@ -26,4 +19,15 @@ public class ReviewsController {
     public ResponseEntity<?> deleteReview(@PathVariable Long id) {
         return null;
     }
+
+    @GetMapping
+    public ResponseEntity<?> getAllReviews(@PathVariable Long id) {
+        return null;
+    }
+
+    @PostMapping("/{id}/reviews")
+    public ResponseEntity<?> createReview() {
+        return null;
+    }
+
 }

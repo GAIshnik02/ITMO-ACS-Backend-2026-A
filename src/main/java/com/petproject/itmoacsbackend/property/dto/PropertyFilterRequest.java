@@ -10,4 +10,9 @@ public class PropertyFilterRequest {
     private String city;
     private String region;
     private String nearestSubway;
+    private Float minPrice;
+    private Float maxPrice;
+    private Float minSquare;
+    private Float maxSquare;
+    private String keyword;
 }
