@@ -1,14 +1,15 @@
 package com.petproject.itmoacsbackend.booking.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 
 public record BookingCreateRequest(
-        @NotEmpty
+        @NotNull
         LocalDate startDate,
-        @NotEmpty
+        @NotNull
         LocalDate endDate,
         @Positive
         Double totalPrice,

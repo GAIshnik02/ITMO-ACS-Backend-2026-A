@@ -6,11 +6,15 @@ import com.petproject.itmoacsbackend.booking.dto.BookingResponse;
 import com.petproject.itmoacsbackend.booking.entities.BookingEntity;
 import com.petproject.itmoacsbackend.booking.enums.BookingStatus;
 import com.petproject.itmoacsbackend.booking.repositories.BookingRepository;
+import com.petproject.itmoacsbackend.payments.dto.PaymentResponse;
+import com.petproject.itmoacsbackend.payments.service.PaymentService;
+import com.petproject.itmoacsbackend.property.dto.PropertyResponse;
 import com.petproject.itmoacsbackend.property.entities.PropertyEntity;
 import com.petproject.itmoacsbackend.property.repositories.PropertyRepository;
 import com.petproject.itmoacsbackend.users.entities.UserEntity;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +30,7 @@ public class BookingService {
 
     private final BookingRepository bookingRepository;
     private final PropertyRepository propertyRepository;
+    private final PaymentService paymentService;
 
     @Transactional
     public BookingResponse createBooking(
@@ -60,7 +65,10 @@ public class BookingService {
     ) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("startDate").descending());
 
-        Page<BookingEntity> entities =  bookingRepository.findByPropertyIdAll(propertyId, pageable);
+        PropertyEntity property = propertyRepository.findById(propertyId).orElseThrow(
+                () -> new EntityNotFoundException("No such entity with id:" + propertyId)
+        );
+        Page<BookingEntity> entities =  bookingRepository.findByPropertyId(property, pageable);
 
         return entities.map(this::mapToResponse);
     }
@@ -86,7 +94,14 @@ public class BookingService {
                 .id(booking.getId())
                 .renterId(booking.getRenterId().getId())
                 .propertyId(booking.getPropertyId().getId())
-                .paymentId(booking.getPaymentId().getId())
+                .payment(booking.getPaymentId() != null ?
+                        PaymentResponse.builder()
+                        .id(booking.getPaymentId().getId())
+                        .amount(booking.getPaymentId().getAmount())
+                        .payedAt(booking.getPaymentId().getPayedAt())
+                        .status(booking.getPaymentId().getPaymentStatus())
+                        .createdAt(booking.getPaymentId().getCreatedAt())
+                        .build() : null)
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
                 .status(booking.getBookingStatus())
@@ -125,6 +140,12 @@ public class BookingService {
         if (!user.getId().equals(property.getUserId().getId()) && !user.getGlobalRole().equals(GlobalRole.ADMIN)) {
             throw new SecurityException("You are not allowed to perform this action");
         }
+
+        if (booking.getBookingStatus().equals(BookingStatus.CANCELLED)) {
+            throw new SecurityException("Booking cancelled by renter");
+        }
+
+        paymentService.createPayment(booking);
 
         booking.setBookingStatus(BookingStatus.CONFIRMED);
         var saved = bookingRepository.save(booking);
@@ -169,5 +190,12 @@ public class BookingService {
         booking.setBookingStatus(BookingStatus.COMPLETED);
         var saved = bookingRepository.save(booking);
         return mapToResponse(saved);
+    }
+
+    public Page<BookingResponse> getAllUserBookings(UserEntity user, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<BookingEntity> properties = bookingRepository.findAllByRenterId(user, pageable);
+        return properties.map(this::mapToResponse);
+
     }
 }

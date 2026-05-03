@@ -1,5 +1,9 @@
 package com.petproject.itmoacsbackend.users.controllers;
 
+import com.petproject.itmoacsbackend.booking.dto.BookingResponse;
+import com.petproject.itmoacsbackend.booking.entities.BookingEntity;
+import com.petproject.itmoacsbackend.booking.repositories.BookingRepository;
+import com.petproject.itmoacsbackend.booking.service.BookingService;
 import com.petproject.itmoacsbackend.property.dto.PropertyResponse;
 import com.petproject.itmoacsbackend.property.repositories.PropertyRepository;
 import com.petproject.itmoacsbackend.property.service.PropertyService;
@@ -23,6 +27,7 @@ public class UserController {
 
     private final UserService userService;
     private final PropertyService propertyService;
+    private final BookingService bookingService;
 
 
     @GetMapping
@@ -42,12 +47,13 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    // TODO: Доделать
     @GetMapping("/bookings")
-    public ResponseEntity<?> getBookings(
+    public ResponseEntity<Page<BookingResponse>> getBookings(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
             @AuthenticationPrincipal UserEntity user
     ) {
-        return null;
+        return ResponseEntity.ok(bookingService.getAllUserBookings(user,page,size));
     }
 
     @GetMapping("/properties")

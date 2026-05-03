@@ -1,6 +1,7 @@
 package com.petproject.itmoacsbackend.booking.dto;
 
 import com.petproject.itmoacsbackend.booking.enums.BookingStatus;
+import com.petproject.itmoacsbackend.payments.dto.PaymentResponse;
 import lombok.Builder;
 
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ public record BookingResponse(
         Long id,
         Long renterId,
         Long propertyId,
-        Long paymentId,
+        PaymentResponse payment,
         LocalDate startDate,
         LocalDate endDate,
         BookingStatus status,

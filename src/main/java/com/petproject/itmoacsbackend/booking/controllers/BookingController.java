@@ -29,7 +29,8 @@ public class BookingController {
         var response = bookingService.createBooking(propertyId, request, user);
         return ResponseEntity.ok(response);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+
+
     @GetMapping
     public ResponseEntity<Page<BookingResponse>> getAllBookings(
             @PathVariable("propertyId") Long propertyId,
