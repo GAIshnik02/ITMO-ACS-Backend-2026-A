@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -171,6 +172,7 @@ public class PropertyService {
                 .longitude(request.getLongitude())
                 .mainImage(request.getMainImage())
                 .available(request.getAvailable() != null ? request.getAvailable() : false)
+                .avgRating(request.getAvgRating())
                 .owner(UserShortResponse.builder()
                             .id(request.getUserId().getId())
                             .username(request.getUserId().getUsername())
@@ -193,6 +195,7 @@ public class PropertyService {
                                 .map(AmenityEntity::getName)
                                 .toList() :
                         List.of())
+                .createdAt(request.getCreatedAt())
                 .build();
     }
 
@@ -262,4 +265,9 @@ public class PropertyService {
         log.info("Deleted image {} from property {}", imageId, propertyId);
     }
 
+    public Page<PropertyResponse> getAllUserProperties(UserEntity user, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<PropertyEntity> properties = propertyRepository.findAllByUserId(user, pageable);
+        return properties.map(this::mapToResponse);
+    }
 }

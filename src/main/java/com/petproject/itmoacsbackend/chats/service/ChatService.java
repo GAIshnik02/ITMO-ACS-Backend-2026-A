@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ChatService {
@@ -65,15 +67,16 @@ public class ChatService {
                     ? chat.getUser2Id().getUsername()
                     : chat.getUser1Id().getUsername();
 
-            MessageEntity lastMessage = messageRepository.findFirstByChatIdOrderByTimestampDesc(chat.getId()).orElse(null);
+            Optional<MessageEntity> lastMessage = messageRepository.findFirstByChatIdOrderByTimestampDesc(chat.getId());
 
-            return new ChatResponse(
-                    chat.getId(),
-                    otherUserId,
-                    otherUserName,
-                    lastMessage != null ? lastMessage.getMessage() : "Нет сообщений",
-                    lastMessage != null ? lastMessage.getTimestamp() : chat.getCreatedAt()
-            );
+
+            return ChatResponse.builder()
+                               .chatId(chat.getId())
+                               .otherUserId(otherUserId)
+                               .otherUserName(otherUserName)
+                               .lastMessage(lastMessage.map(MessageEntity::getMessage).orElse("Нет сообщений"))
+                               .lastMessageTime(lastMessage.map(MessageEntity::getTimestamp).orElse(chat.getCreatedAt()))
+                               .build();
         });
     }
 

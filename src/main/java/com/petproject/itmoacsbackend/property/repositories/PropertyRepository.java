@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface PropertyRepository extends JpaRepository<PropertyEntity, Long> {
 
     Page<PropertyEntity> findAllByAvailableTrue(Pageable pageable);
-
     Page<PropertyEntity> findAllByUserId(UserEntity user, Pageable pageable);
 
     @Query("SELECT p FROM PropertyEntity p WHERE " +
@@ -44,5 +43,8 @@ public interface PropertyRepository extends JpaRepository<PropertyEntity, Long> 
             "LOWER(p.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(p.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     Page<PropertyEntity> searchByKeyword(@Param("keyword") String keyword, Pageable pageable);
+
+
+
 
 }
