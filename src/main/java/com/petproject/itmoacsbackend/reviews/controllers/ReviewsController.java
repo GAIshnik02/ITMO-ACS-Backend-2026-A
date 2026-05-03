@@ -21,7 +21,7 @@ public class ReviewsController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteReview(
+    public ResponseEntity<Void> deleteReview(
             @PathVariable("propertyId") Long propertyId,
             @PathVariable("id") Long reviewId,
             @AuthenticationPrincipal UserEntity user

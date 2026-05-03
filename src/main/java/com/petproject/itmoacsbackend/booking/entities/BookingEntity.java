@@ -44,7 +44,7 @@ public class BookingEntity {
     @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private BookingStatus bookingStatus =  BookingStatus.PENDING;
+    private BookingStatus bookingStatus = BookingStatus.PENDING;
 
     @Column(nullable = false)
     private Double totalPrice;
