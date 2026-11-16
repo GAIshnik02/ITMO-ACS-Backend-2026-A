@@ -41,6 +41,8 @@ jobs:
             cr.yandex/${{ secrets.YC_REGISTRY_ID }}/${{ matrix.service }}:latest
           cache-from: type=gha,scope=${{ matrix.service }}
           cache-to: type=gha,mode=max,scope=${{ matrix.service }}
+          provenance: false
+          outputs: type=image,oci-mediatypes=false
 
   deploy:
     needs: build-and-push
