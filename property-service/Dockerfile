@@ -50,28 +50,9 @@ COPY src ./src
 RUN --mount=type=cache,target=/root/.gradle \
     ./gradlew clean build -x test --no-daemon
 
-# --- Этап 2: Анализ зависимостей и сборка кастомного JRE ---
-FROM eclipse-temurin:23-jdk-alpine AS jre-builder
+# --- Этап 2: Финальный образ (полный официальный JRE + jar) ---
+FROM eclipse-temurin:23-jre-alpine
 WORKDIR /app
-COPY --from=builder /app/build/libs/*.jar app.jar
-
-RUN jdeps --multi-release 23 --print-module-deps --ignore-missing-deps app.jar > modules.txt
-
-# Добавлены модули, которые jdeps не видит из-за рефлексии Spring Boot
-RUN jlink \
-    --add-modules $(cat modules.txt),java.desktop,java.sql,java.naming,java.management,jdk.unsupported \
-    --strip-debug \
-    --no-man-pages \
-    --no-header-files \
-    --compress=2 \
-    --output /custom-jre
-
-# --- Этап 3: Финальный образ (только JRE + jar) ---
-FROM alpine:3.20
-WORKDIR /app
-
-COPY --from=jre-builder /custom-jre /opt/jre
-ENV PATH="/opt/jre/bin:$PATH"
 
 COPY --from=builder /app/build/libs/*.jar app.jar
 
