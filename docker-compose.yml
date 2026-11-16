@@ -1,6 +1,6 @@
 services:
   eureka-server:
-    build: ./eureka-server
+    image: cr.yandex/crps79u802f4h5665al1/eureka-server:latest
     container_name: eureka-server
     ports:
       - "8081:8081"
@@ -8,7 +8,7 @@ services:
       - microservices-net
 
   api-gateway:
-    build: ./api-gateway
+    image: cr.yandex/crps79u802f4h5665al1/api-gateway:latest
     container_name: api-gateway
     ports:
       - "8080:8080"
@@ -145,7 +145,7 @@ services:
       - microservices-net
 
   auth-service:
-    build: ./auth-service
+    image: cr.yandex/crps79u802f4h5665al1/auth-service:latest
     container_name: auth-service
     depends_on:
       eureka-server:
@@ -157,7 +157,7 @@ services:
       - microservices-net
 
   property-service:
-    build: ./property-service
+    image: cr.yandex/crps79u802f4h5665al1/property-service:latest
     container_name: property-service
     depends_on:
       eureka-server:
@@ -168,7 +168,7 @@ services:
       - microservices-net
 
   booking-service:
-    build: ./booking-service
+    image: cr.yandex/crps79u802f4h5665al1/booking-service:latest
     container_name: booking-service
     depends_on:
       eureka-server:
@@ -179,7 +179,7 @@ services:
       - microservices-net
 
   payment-service:
-    build: ./payment-service
+    image: cr.yandex/crps79u802f4h5665al1/payment-service:latest
     container_name: payment-service
     depends_on:
       eureka-server:
@@ -190,7 +190,7 @@ services:
       - microservices-net
 
   chat-service:
-    build: ./chat-service
+    image: cr.yandex/crps79u802f4h5665al1/chat-service:latest
     container_name: chat-service
     depends_on:
       eureka-server:
@@ -201,7 +201,7 @@ services:
       - microservices-net
 
   reviews-service:
-    build: ./reviews-service
+    image: cr.yandex/crps79u802f4h5665al1/reviews-service:latest
     container_name: reviews-service
     depends_on:
       eureka-server:
