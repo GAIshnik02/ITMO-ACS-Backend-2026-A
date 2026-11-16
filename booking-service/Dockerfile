@@ -57,8 +57,9 @@ COPY --from=builder /app/build/libs/*.jar app.jar
 
 RUN jdeps --multi-release 23 --print-module-deps --ignore-missing-deps app.jar > modules.txt
 
+# Добавлены модули, которые jdeps не видит из-за рефлексии Spring Boot
 RUN jlink \
-    --add-modules $(cat modules.txt) \
+    --add-modules $(cat modules.txt),java.desktop,java.sql,java.naming,java.management,jdk.unsupported \
     --strip-debug \
     --no-man-pages \
     --no-header-files \

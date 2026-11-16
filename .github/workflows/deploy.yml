@@ -8,7 +8,7 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 1
+      max-parallel: 4
       matrix:
         service: [
           'eureka-server',
